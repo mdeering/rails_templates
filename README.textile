@@ -1,0 +1,9 @@
+h1. Rails Application Templates
+
+Nothing to special here.  GitHub is just the perfect place to up my templates up on for sharing and reference.
+
+h2. TODO List
+
+* TODO: Find out if we have access to the name of the application inside our template without having to rely on the ask function
+* TODO: Find a decent resource or guide for rails templates and figure out how to include other templates or modules
+* TODO: Add the config file setup for exception notification plugin
