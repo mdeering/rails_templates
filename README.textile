@@ -2,8 +2,18 @@ h1. Rails Application Templates
 
 Nothing to special here.  GitHub is just the perfect place to up my templates up on for sharing and reference.
 
+h2. Notice
+
+This does work as is but I'm just doing a checkpoint checkin in this working state before I go after a new approach I found through "Hector's Groundwork Repo":http://github.com/hectoregm/groundwork/tree/master
+
+Just looking into the ground work repo to see if I want to fork and refactor or start poaching code from it to better absorb the approach. 
+
 h2. TODO List
 
-* TODO: Find out if we have access to the name of the application inside our template without having to rely on the ask function
-* TODO: Find a decent resource or guide for rails templates and figure out how to include other templates or modules
-* TODO: Add the config file setup for exception notification plugin
+"The TODO List in this file is gone and replaced with GitHub's issues feature.":http://github.com/mdeering/rails_templates/issues
+
+h2. Credits
+
+* "Hector's Groundwork templates":http://github.com/hectoregm/groundwork/tree
+* "Jeremy Mcanally's Template Collection":http://github.com/jeremymcanally/rails-templates/tree
+* "Rails Templates anouncement when it came into edge":http://m.onkey.org/2008/12/4/rails-templates
