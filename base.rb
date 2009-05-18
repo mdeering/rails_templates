@@ -42,7 +42,7 @@ end
 # notification_email_recipients = ask('Enter the emails you wish to recieve application exception notifications seperated with just a space (joe@schmoe.com bill@schmoe.com): ')
 # notification_sender_email     = ask('Enter the email address that you wish your application exception notifications to be sent out under ("Application Error" <app.error@myapp.com>): ')
 
-rake 'rails:freeze:edge' # if freeze_to_edge
+rake 'rails:freeze:edge RELEASE=2.3.2' # if freeze_to_edge
 
 # =========================
 # Initial clean up
@@ -190,9 +190,11 @@ ExceptionNotifier.sender_address = %("Application Error" <app.error@myapp.com>)
 ExceptionNotifier.email_prefix = "[APP] "
 }
 
-piston 'rspec',              'git://github.com/dchelimsky/rspec.git'
-piston 'rspec-rails',        'git://github.com/dchelimsky/rspec-rails.git'
+piston 'rspec',                'git://github.com/dchelimsky/rspec.git'
+piston 'rspec-rails',          'git://github.com/dchelimsky/rspec-rails.git'
 generate("rspec")
+
+piston 'resource_controller', 'git://github.com/giraffesoft/resource_controller.git'
 
 
 
