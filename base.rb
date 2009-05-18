@@ -12,37 +12,22 @@
 # TODO: Look at adding http://github.com/justinfrench/formtastic/tree/master to the base templat
 # =========================
 
-# FIXME: These functions do not belong here.
-def download(location, destination)
-  puts "Downloading #{location} => #{destination}"
-  run "wget --directory-prefix=#{destination} #{location}"
-end
-
-def haml!
-  run 'haml --rails .'
-end
-
-def piston(vendor_directory_name, repository_location)
-  run "piston import #{repository_location} vendor/plugins/#{vendor_directory_name}"
-end
-
-def touch(*args)
-  args = args.first if args.first.class == Array
-  args.each do |file_location|
-    next if File.file?(file_location)
-    directory = File.dirname(file_location)
-    basename  = File.basename(file_location)
-    puts "Touching #{directory}/#{basename}"
-    puts "Ran out of time for today TODO: Finish up touch function!"
-  end
-end
+# TODO: raise/rescue that checks that the env variable is set and perhaps a smart way of defining it.
+# I did not have luch with the following because it looks like the __DIR__ takes on the new rails root
+# rather then the origin of the template file.
+# require 'pathname'
+# 
+# def __DIR__
+#   Pathname(__FILE__).dirname.expand_path(Dir.getwd)
+# end
+load_template("#{ENV['RAILS_TEMPLATES_PATH']}/helper_methods.rb")
 
 # application_name              = ask("What is the common name going to be used to reference this application?: ")
 # freeze_to_edge                = yes?("Freeze rails gems ?")
 # notification_email_recipients = ask('Enter the emails you wish to recieve application exception notifications seperated with just a space (joe@schmoe.com bill@schmoe.com): ')
 # notification_sender_email     = ask('Enter the email address that you wish your application exception notifications to be sent out under ("Application Error" <app.error@myapp.com>): ')
 
-rake 'rails:freeze:edge' # if freeze_to_edge
+# rake 'rails:freeze:edge' # if freeze_to_edge
 
 # =========================
 # Initial clean up
@@ -98,8 +83,8 @@ config/database.yml
 coverage/*
 }
 
-gem 'thoughtbot-factory_girl', :lib => 'factory_girl',  :source => 'http://gems.github.com'
-gem 'thoughtbot-shoulda',      :lib => 'shoulda',       :source => 'http://gems.github.com'
+gem 'thoughtbot-factory_girl', :lib => 'factory_girl',  :source => 'http://gems.github.com', :env => 'test'
+gem 'thoughtbot-shoulda',      :lib => 'shoulda',       :source => 'http://gems.github.com', :env => 'test'
 gem 'mislav-will_paginate',    :lib => 'will_paginate', :source => 'http://gems.github.com'
 
 # This version of annotate puts the scema at the bottom of 
@@ -114,7 +99,7 @@ download 'http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js', 'public/
 touch 'this.something'
 touch ['public/javascripts/admin.js', 'public/javascripts/application.js', 'public/javascripts/public.js']
 # Create working files for stylesheets
-touch ['public/stylesheets/sass/admin.sass']
+touch ['public/stylesheets/sass/admin.sass', 'public/stylesheets/sass/reset.sass']
 file 'config/asset_packages.yml',
 %q{---
 javascripts:
@@ -128,8 +113,10 @@ javascripts:
   - public
 stylesheets:
 - admin:
+  - reset
   - admin
 - public:
+  - reset
   - application
 }
 
