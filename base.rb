@@ -2,25 +2,24 @@
 # base.rb
 # Author: Michael Deering http://mdeering.com
 #
+# Usage: rails <name app> -m RAILS_TEMPLATES_PATH/base.rb
 # Absolute minimum that goes into every Rails app
 # =========================
 # TODO: Find out if we have access to the name of the application inside our template
 #       without having to rely on the ask function
 # TODO: Find a decent resource or guide for rails templates
 #       and figure out how to include other templates or modules
-# TODO: Add the config file setup for exception notification plugin
-# TODO: Look at adding http://github.com/justinfrench/formtastic/tree/master to the base templat
+# TODO: Look at adding http://github.com/justinfrench/formtastic/tree/master to the base template
 # =========================
 
-# TODO: raise/rescue that checks that the env variable is set and perhaps a smart way of defining it.
-# I did not have luch with the following because it looks like the __DIR__ takes on the new rails root
-# rather then the origin of the template file.
-# require 'pathname'
-# 
-# def __DIR__
-#   Pathname(__FILE__).dirname.expand_path(Dir.getwd)
-# end
-load_template("#{ENV['RAILS_TEMPLATES_PATH']}/helper_methods.rb")
+def download(location, destination)
+  puts "Downloading #{location} => #{destination}"
+  run "wget --directory-prefix=#{destination} #{location}"
+end
+
+def haml!
+  run 'haml --rails .'
+end
 
 # application_name              = ask("What is the common name going to be used to reference this application?: ")
 # freeze_to_edge                = yes?("Freeze rails gems ?")
@@ -66,7 +65,9 @@ production:
   database: application_development
 }
 
-# Grab the latest copy of jquery
+# Grab the latest copy of jquery and the jquery form validator
+download 'http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js', 'public/javascripts'
+download 'http://assets.mdeering.com/jquery.validate.pack.js', 'public/javascripts'
 
 # Start the .gitignore file
 file '.gitignore',
@@ -83,23 +84,21 @@ config/database.yml
 coverage/*
 }
 
+# now copy over the database template
+run 'cp config/database.yml.sample config/database.yml'
+
 gem 'thoughtbot-factory_girl', :lib => 'factory_girl',  :source => 'http://gems.github.com', :env => 'test'
-gem 'thoughtbot-shoulda',      :lib => 'shoulda',       :source => 'http://gems.github.com', :env => 'test'
+gem 'thoughtbot-shoulda',      :lib => false,           :source => 'http://gems.github.com', :env => 'test'
 gem 'mislav-will_paginate',    :lib => 'will_paginate', :source => 'http://gems.github.com'
 
 # This version of annotate puts the scema at the bottom of 
 # the file and also leaves out adding the schema version by default
-piston 'annotate_models',    'git://github.com/bendycode/annotate_models.git'
+plugin 'annotate_models', :git => 'git://github.com/bendycode/annotate_models.git', :submodule => true
 
 # Asset packager don't go anywhere without it!
 # Lets also setup the basic config file to work with here also.
-piston 'asset_packager',     'git://github.com/sbecker/asset_packager.git'
-download 'http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js', 'public/javascripts'
-# Create working files for javascript
-touch 'this.something'
-touch ['public/javascripts/admin.js', 'public/javascripts/application.js', 'public/javascripts/public.js']
-# Create working files for stylesheets
-touch ['public/stylesheets/sass/admin.sass', 'public/stylesheets/sass/reset.sass']
+plugin 'asset_packager',  :git => 'git://github.com/sbecker/asset_packager.git',    :submodule => true
+
 file 'config/asset_packages.yml',
 %q{---
 javascripts:
@@ -120,7 +119,7 @@ stylesheets:
   - application
 }
 
-piston 'exception_notifier', 'git://github.com/rails/exception_notification.git'
+plugin 'exception_notifier', :git => 'git://github.com/rails/exception_notification.git', :submodule => true
 initializer 'exception_notification.rb',
 %q{# == Customization
 # 
@@ -177,11 +176,11 @@ ExceptionNotifier.sender_address = %("Application Error" <app.error@myapp.com>)
 ExceptionNotifier.email_prefix = "[APP] "
 }
 
-piston 'rspec',                'git://github.com/dchelimsky/rspec.git'
-piston 'rspec-rails',          'git://github.com/dchelimsky/rspec-rails.git'
-generate("rspec")
+plugin 'rspec',            :git => 'git://github.com/dchelimsky/rspec.git',         :submodule => true
+plugin 'rspec-rails',      :git => 'git://github.com/dchelimsky/rspec-rails.git',   :submodule => true
+generate('rspec')
 
-piston 'resource_controller', 'git://github.com/giraffesoft/resource_controller.git'
+plugin 'make_resourceful', :git => 'git://github.com/hcatlin/make_resourceful.git', :submodule => true
 
 
 
