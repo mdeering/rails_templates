@@ -93,11 +93,14 @@ gem 'mislav-will_paginate',    :lib => 'will_paginate', :source => 'http://gems.
 
 # This version of annotate puts the scema at the bottom of 
 # the file and also leaves out adding the schema version by default
-plugin 'annotate_models', :git => 'git://github.com/bendycode/annotate_models.git', :submodule => true
+plugin 'annotate_models',      :git => 'git://github.com/bendycode/annotate_models.git',     :submodule => true
+
+# Attribute Normalizer
+plugin 'attribute_normalizer', :git => 'git://github.com/mdeering/attribute_normalizer.git', :submodule => true
 
 # Asset packager don't go anywhere without it!
 # Lets also setup the basic config file to work with here also.
-plugin 'asset_packager',  :git => 'git://github.com/sbecker/asset_packager.git',    :submodule => true
+plugin 'asset_packager',       :git => 'git://github.com/sbecker/asset_packager.git',        :submodule => true
 
 file 'config/asset_packages.yml',
 %q{---

@@ -6,4 +6,4 @@ h2. Credits
 
 * "Hector's Groundwork templates":http://github.com/hectoregm/groundwork/tree
 * "Jeremy Mcanally's Template Collection":http://github.com/jeremymcanally/rails-templates/tree
-* "Rails Templates anouncement when it came into edge":http://m.onkey.org/2008/12/4/rails-templates
+* "Rails template announcement when it came into edge":http://m.onkey.org/2008/12/4/rails-templates
