@@ -2,7 +2,7 @@
 # base.rb
 # Author: Michael Deering http://mdeering.com
 #
-# Usage: rails <name app> -m RAILS_TEMPLATES_PATH/base.rb
+# Usage: rails <name app> -m $RAILS_TEMPLATES_PATH/base.rb
 # Absolute minimum that goes into every Rails app
 # =========================
 # TODO: Find out if we have access to the name of the application inside our template
@@ -26,7 +26,7 @@ end
 # notification_email_recipients = ask('Enter the emails you wish to recieve application exception notifications seperated with just a space (joe@schmoe.com bill@schmoe.com): ')
 # notification_sender_email     = ask('Enter the email address that you wish your application exception notifications to be sent out under ("Application Error" <app.error@myapp.com>): ')
 
-rake 'rails:freeze:edge RELEASE=2.3.2' # if freeze_to_edge
+rake 'rails:freeze:edge RELEASE=2.3.4' # if freeze_to_edge
 
 # =========================
 # Initial clean up
@@ -38,7 +38,7 @@ rake 'rails:freeze:edge RELEASE=2.3.2' # if freeze_to_edge
 end
 
 # Set up the local git repository
-git :init
+# git :init
 
 haml!
 capify!
@@ -76,7 +76,6 @@ coverage/*
 log/*.log
 db/*.db
 db/*.sqlite3
-db/schema.rb
 tmp/**/*
 doc/api
 doc/app
@@ -87,9 +86,11 @@ coverage/*
 # now copy over the database template
 run 'cp config/database.yml.sample config/database.yml'
 
+gem 'mislav-will_paginate',    :lib => 'will_paginate', :source => 'http://gems.github.com'
+
 gem 'thoughtbot-factory_girl', :lib => 'factory_girl',  :source => 'http://gems.github.com', :env => 'test'
 gem 'thoughtbot-shoulda',      :lib => false,           :source => 'http://gems.github.com', :env => 'test'
-gem 'mislav-will_paginate',    :lib => 'will_paginate', :source => 'http://gems.github.com'
+
 
 # This version of annotate puts the scema at the bottom of 
 # the file and also leaves out adding the schema version by default
@@ -107,6 +108,7 @@ file 'config/asset_packages.yml',
 javascripts:
 - admin:
   - jquery.min
+  - jquery.validate.pack  
   - application
   - admin
 - public
