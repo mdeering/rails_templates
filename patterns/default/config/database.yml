@@ -1,0 +1,17 @@
+defaults: &defaults
+  adapter:  mysql
+  username: root
+  password:
+  host: localhost
+
+development:
+  <<:       *defaults
+  database: #{ current_app_name }
+
+test:
+  <<:       *defaults
+  database: #{ current_app_name }_test
+
+production:
+  <<:       *defaults
+  database: #{ current_app_name }

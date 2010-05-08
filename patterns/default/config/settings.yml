@@ -1,0 +1,12 @@
+defaults: &defaults
+  site:
+    secure: false
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults

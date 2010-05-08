@@ -1,0 +1,10 @@
+---
+javascripts:
+-#{ current_app_name }:
+  - public/javascripts/jquery.js
+  - public/javascripts/jquery.validate.js
+  - public/javascripts/application.js
+
+stylesheets:
+-#{ current_app_name }:
+  - public/stylesheets/application.css

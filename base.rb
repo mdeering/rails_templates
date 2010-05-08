@@ -1,97 +1,72 @@
-# =========================
-# base.rb
-# Author: Michael Deering http://mdeering.com
-#
-# Usage: rails <name app> -m $RAILS_TEMPLATES_PATH/base.rb
-# Absolute minimum that goes into every Rails app
-# =========================
-# TODO: Find out if we have access to the name of the application inside our template
-#       without having to rely on the ask function
-# TODO: Find a decent resource or guide for rails templates
-#       and figure out how to include other templates or modules
-# TODO: Look at adding http://github.com/justinfrench/formtastic/tree/master to the base template
-# =========================
+require File.join(File.expand_path(File.dirname(template), File.join(root,'..')), 'template_framework')
 
-# =========================
-# Initial clean up
-# =========================
+log template
 
-application_name = Dir.pwd.split('/').last.split('.').first
+init_template_framework template, root
+add_template_path File.expand_path(File.join(ENV['HOME'],'.rails_templates')), :prepend
+# load_options
 
-['public/favicon.ico', 'public/index.html', 'public/javascripts/*'].each do |file|
-  puts "Removing #{file}"
-  run "rm #{file}"
+# Delete Unessesary Files
+[ 'public/favicon.ico', 'public/index.html', 'public/javascripts/*'
+].each { |file| delete(file) }
+
+# Set up git repository
+git :init
+
+# Set up gitignore and commit base state
+file '.gitignore', load_pattern('.gitignore')
+
+commit_state "base application"
+
+# Install Gems
+{ 'attribute_normalizer'  => {},
+  'authlogic'             => {},
+  'compass'               => {},
+  'cucumber'              => { :env => :test },
+  'haml'                  => {},
+  'inherited_resources'   => { :version => '1.0.6' },
+  'factory_girl'          => { :env => :test },
+  'flash_messages_helper' => {},
+  'metric_fu'             => { :env => :test },
+  'pickle'                => { :env => :test },
+  'rspec'                 => { :env => :test },
+  'rspec-rails'           => { :env => :test },
+  'searchlogic'           => {},
+  'settingslogic'         => {},
+  'shoulda'               => { :env => :test },
+  'will_paginate'         => {},
+  'webrat'                => { :env => :test },
+}.each { |gem_name, options| gem gem_name, options }
+
+# Install Plugins
+{ 'annotate_models' => { :git => 'git://github.com/mdeering/annotate_models.git' },
+  'asset_packager'  => { :git => 'git://github.com/sbecker/asset_packager.git' }
+}.each { |plugin_name, options| plugin plugin_name, options }
+
+commit_state "Gems and plugins added to the application"
+
+# Setup the configuration Files
+[ 'asset_packages.yml', 'database.yml', 'settings.yml' ].each do |config_file|
+  file "config/#{config_file}.template", load_pattern("config/#{config_file}", 'default', binding)
+  file "config/#{config_file}", load_pattern("config/#{config_file}", 'default', binding)
 end
 
-# 99.9% of the time we are going to use MySQL
-file 'config/database.yml.sample',
-"defaults: &defaults
-  adapter:  mysql
-  username: root
-  password: 
-  host: localhost
+# Setup the default javascript evnironment
+download 'http://code.jquery.com/jquery-1.4.js', 'public/javascripts/jquery-1.4.js'
+download 'http://ajax.microsoft.com/ajax/jquery.validate/1.7/jquery.validate.js', 'public/javascripts/jquery.validate.js'
 
-development:
-  <<:       *defaults
-  database: #{application_name}
+file "public/javascripts/application.js", load_pattern("public/javascripts/application.js")
 
-test:
-  <<:       *defaults
-  database: #{application_name}_test
+# Setup the default css environment
+file "public/stylesheets/sass/application.sass", load_pattern("public/stylesheets/application.sass")
 
-production:
-  <<:       *defaults
-  database: #{application_name}
-"
-file 'config/assets.yml',
-"javascripts:
-  base:
-    - public/javascripts/*.js
-
-stylesheets:
-  base:
-    - public/stylesheets/*.css
-"
-
-# Grab the latest copy of jquery and the jquery form validator
-run 'curl -L http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js > public/javascripts/jquery.min.js'
-run 'curl -L http://jqueryjs.googlecode.com/svn/trunk/plugins/form/jquery.form.js > public/javascripts/jquery.form.js'
-run 'curl -L http://assets.mdeering.com/jquery.validate.pack.js > public/javascripts/jquery.validate.pack.js'
-
-# Start the .gitignore file
-file '.gitignore',
-%q{.DS_Store
-coverage/*
-log/*.log
-db/*.db
-db/*.sqlite3
-tmp/**/*
-doc/api
-doc/app
-config/database.yml
-}
-
-# now copy over the database template
-run 'cp config/database.yml.sample config/database.yml'
-
-gem 'attribute_normalizer'
-gem 'authlogic'
-gem 'haml'
-gem 'jammit'
-gem 'searchlogic'
-gem 'settingslogic'
-gem 'will_paginate'
-
-# Test ENV only
-gem 'factory_girl', :env => 'test'
-gem 'metric_fu',    :env => 'test'
-gem 'rspec',        :env => 'test'
-gem 'rspec-rails',  :env => 'test'
-gem 'shoulda',      :env => 'test'
-
-
-# This version of annotate puts the schema at the bottom of the
-# files and also leaves out adding the schema version by default
-plugin 'annotate_models',      :git => 'git@github.com:mdeering/annotate_models.git'
+commit_state "Deveopment Environment Setup"
 
 generate('rspec')
+generate('cucumber')
+
+# Delete Unessesary Files and Directories
+[ 'spec/fixtures'
+].each { |file| delete(file) }
+
+commit_state "Testing Environment Setup"

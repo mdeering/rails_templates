@@ -1,9 +1,46 @@
 h1. Rails Application Templates
 
-Nothing to special here.  GitHub is just the perfect place to up my templates up on for sharing and reference.
+h2. Tool Set
+
+h3. Model
+
+* "Attribute Normalizer":http://github.com/mdeering/attribute_normalizer
+
+h3. View
+
+* "Compass":http://github.com/chriseppstein/compass
+* "HAML/SASS":http://github.com/nex3/haml
+* "Flash Messages Helper":http://github.com/mdeering/flash_messages_helper
+* "Formtastic":http://github.com/mdeering/formtastic
+
+h3. Controller
+
+* "Inherited Resources":http://github.com/josevalim/inherited_resources
+
+h3. Application
+
+* "Authlogic":http://github.com/binarylogic/authlogic Tweaked to use "bcrypt":http://bcrypt-ruby.rubyforge.org and "OpenID":http://openid.net
+* "Seachlogic":http://github.com/binarylogic/searchlogic
+* "Settingslogic":http://github.com/binarylogic/settingslogic
+* "Will Paginate":http://github.com/mislav/will_paginate
+
+h3. Tests
+
+* "Cucumer":http://github.com/aslakhellesoy/cucumber
+* "Factory Girl":http://github.com/thoughtbot/factory_girl
+* "Pickle":http://github.com/ianwhite/pickle
+* "RSpec":http://github.com/dchelimsky/rspec
+* "RSpec-Rails":http://github.com/dchelimsky/rspec-rails
+* "Shoulda":http://github.com/thoughtbot/shoulda
+* "Webrat":http://github.com/brynary/webrat
+
+h3. Deployment
+
+* "Asset Packager":http://github.com/Dieinzige/asset_packager
 
 h2. Credits
 
+* "Big Old Rails Template":http://github.com/ffmike/BigOldRailsTemplate
 * "Hector's Groundwork templates":http://github.com/hectoregm/groundwork/tree
 * "Jeremy Mcanally's Template Collection":http://github.com/jeremymcanally/rails-templates/tree
 * "Rails template announcement when it came into edge":http://m.onkey.org/2008/12/4/rails-templates
