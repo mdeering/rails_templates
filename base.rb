@@ -23,6 +23,8 @@ commit_state "base application"
   'authlogic'             => {},
   'compass'               => {},
   'cucumber'              => { :env => :test },
+  'cucumber-rails'        => { :env => :test },
+  'database_cleaner'      => { :env => :test },
   'haml'                  => {},
   'inherited_resources'   => { :version => '1.0.6' },
   'factory_girl'          => { :env => :test },
@@ -34,6 +36,7 @@ commit_state "base application"
   'searchlogic'           => {},
   'settingslogic'         => {},
   'shoulda'               => { :env => :test },
+  'timecop'               => { :env => :test },
   'will_paginate'         => {},
   'webrat'                => { :env => :test },
 }.each { |gem_name, options| gem gem_name, options }
@@ -64,6 +67,7 @@ commit_state "Deveopment Environment Setup"
 
 generate('rspec')
 generate('cucumber')
+generate('pickle')
 
 # Delete Unessesary Files and Directories
 [ 'spec/fixtures'

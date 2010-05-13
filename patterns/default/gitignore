@@ -8,5 +8,6 @@ config/database.yml
 config/settings.yml
 public/stylesheets/*.css
 public/stylesheets/compiled/*.css
+spec/fixtures
 *~
 log
