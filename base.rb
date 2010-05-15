@@ -74,3 +74,8 @@ generate('pickle')
 ].each { |file| delete(file) }
 
 commit_state "Testing Environment Setup"
+
+rake 'db:create:all'
+rake 'db:migrate'
+rake 'rake spec'
+rake 'cucumber:all'
