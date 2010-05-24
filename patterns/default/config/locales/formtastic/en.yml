@@ -1,0 +1,6 @@
+en:
+  formtastic:
+    actions:
+      user_session:
+        new: 'Login'
+        create: 'Login'

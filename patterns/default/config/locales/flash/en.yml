@@ -1,0 +1,13 @@
+en:
+  flash:
+    authentication_failed: 'Login Error'
+    authorization_failed:  'Authorization Failed'
+    users:
+      create:
+        notice: 'Your account has been successfully created.'
+    user_sessions:
+      create:
+        notice: 'You have been successfully logged into the application.'
+        alert: 'Invalid email and password combination.'
+      destroy:
+        notice: 'You have been successfully logged out of the application'

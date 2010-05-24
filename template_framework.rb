@@ -30,6 +30,7 @@ module Rails
 
     def delete(file)
       debug_log "Removing file: #{file}"
+      run "rm #{file}"
     end
 
     def download(from, to = from.split("/").last)

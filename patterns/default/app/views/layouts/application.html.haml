@@ -1,0 +1,12 @@
+!!!
+%html{ :xmlns => 'http://www.w3.org/1999/xhtml' }
+  %head
+    %meta{ 'http-equiv' => 'Content-type', :content => 'text/html;charset=UTF-8' }
+    %title= yield(:title)
+    %meta{ :name => 'description', :content => yield(:description) }
+    - if yield(:keywords)
+      %meta{ :name => 'keywords',    :content => yield(:keywords) }
+
+  %body
+    = flash_messages
+    = yield

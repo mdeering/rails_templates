@@ -1,0 +1,5 @@
+- semantic_form_for resource, :url => login_url do |form|
+  = error_messages_for :user
+  = form.inputs :email, :password
+  - form.buttons do
+    = form.commit_button 'Login'

@@ -1,4 +1,3 @@
-.DS_Store
 coverage/*
 log/*.log
 db/*.db
@@ -9,5 +8,4 @@ config/settings.yml
 public/stylesheets/*.css
 public/stylesheets/compiled/*.css
 spec/fixtures
-*~
 log
