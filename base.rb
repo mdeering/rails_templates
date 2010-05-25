@@ -131,6 +131,6 @@ file "config/routes.rb", load_pattern("config/routes.rb")
 rake 'db:create:all'
 rake 'db:migrate'
 rake 'spec'
-run  'cucumber'
+rake 'cucumber:a;;'
 
 commit_state "User model, authentication, and nervecenter"
